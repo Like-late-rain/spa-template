@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+coverage
+*.min.js
+*.bundle.js
+.next
+out
+public
+.turbo
+# Editor/IDE
+.history

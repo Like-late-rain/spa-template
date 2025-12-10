@@ -1,0 +1,38 @@
+# Dependencies
+node_modules
+.history
+
+# Build outputs
+dist
+build
+coverage
+out
+.next
+
+# Bundle files
+*.min.js
+*.bundle.js
+
+# Package manager
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage
+
+# Temporary files
+*.tmp
+*.temp

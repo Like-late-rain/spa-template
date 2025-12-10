@@ -1,0 +1,100 @@
+{
+  // TypeScript 编译器配置选项
+  "compilerOptions": {
+    // 编译目标：指定编译后的 JavaScript 版本为 ES2020
+    // 决定了你可以使用哪些 JavaScript 语法特性
+    "target": "ES2020",
+
+    // 库文件：指定编译时需要包含的类型定义库
+    // ES2020: ES2020 的类型定义
+    // DOM: 浏览器 DOM API 的类型定义（如 document、window 等）
+    // DOM.Iterable: DOM 中可迭代对象的类型定义
+    "lib": ["ES2020", "DOM", "DOM.Iterable", "ESNext"],
+
+    // JSX 编译方式：指定 JSX 代码如何转换
+    // react-jsx: 使用 React 17+ 的新 JSX 转换（无需手动导入 React）
+    "jsx": "react-jsx",
+
+    // 模块系统：指定生成代码使用的模块格式
+    // ESNext: 使用最新的 ES 模块标准
+    "module": "ESNext",
+
+    // 模块解析策略：指定如何查找模块
+    "moduleResolution": "node",
+
+    // 允许导入 TypeScript 扩展名：允许 import 语句包含 .ts/.tsx 扩展名
+    // 例如：import { foo } from './foo.tsx'
+    "allowImportingTsExtensions": true,
+
+    // 允许导入 JSON 文件：可以直接 import JSON 文件并获得类型提示
+    // 例如：import config from './config.json'
+    "resolveJsonModule": true,
+
+    // 隔离模块：确保每个文件都可以被独立编译（适用于 babel、swc 等转译工具）
+    // 限制某些全局作用域的特性，提高编译性能
+    "isolatedModules": true,
+
+    // 不生成输出文件：TypeScript 只做类型检查，不生成 .js 文件
+    // 因为我们使用 webpack + swc 来编译代码，不需要 TypeScript 生成文件
+    "noEmit": true,
+
+    // ES 模块互操作：允许使用 import 导入 CommonJS 模块
+    // 例如：import React from 'react' 而不是 import * as React from 'react'
+    "esModuleInterop": true,
+
+    // 强制文件名大小写一致：确保导入路径的大小写与实际文件名一致
+    // 防止在不同操作系统（Windows/Linux）上出现问题
+    "forceConsistentCasingInFileNames": true,
+
+    // 严格模式：启用所有严格的类型检查选项
+    // 包括：strictNullChecks, strictFunctionTypes 等，帮助发现潜在错误
+    "strict": true,
+
+    // 跳过库文件检查：跳过对 .d.ts 声明文件的类型检查，提升编译速度
+    // 通常第三方库的类型定义都是正确的，无需检查
+    "skipLibCheck": true,
+
+    // 允许合成默认导入：允许从没有默认导出的模块中默认导入
+    // 例如：import React from 'react'（即使 React 没有 default export）
+    "allowSyntheticDefaultImports": true,
+
+    // ========== 路径映射配置 ==========
+    // 基准路径：所有非相对路径的模块导入都相对于这个路径解析
+    // "." 表示 tsconfig.json 所在的目录（项目根目录）
+    "baseUrl": ".",
+    "rootDir": ".",
+
+    // 路径别名：定义导入路径的映射规则（对应 webpack 的 alias 配置）
+    // 让你可以使用简短的别名代替长路径，例如：
+    // import { Header } from '@components/common'
+    // 而不是 import { Header } from '../../../components/common'
+    "paths": {
+      "@/*": ["src/*"],                      // @/ 映射到 src/
+      "@components/*": ["src/components/*"], // @components/ 映射到 src/components/
+      "@hooks/*": ["src/hooks/*"],           // @hooks/ 映射到 src/hooks/
+      "@pages/*": ["src/pages/*"],           // @pages/ 映射到 src/pages/
+      "@layouts/*": ["src/layouts/*"],       // @layouts/ 映射到 src/layouts/
+      "@routes/*": ["src/routes/*"],         // @routes/ 映射到 src/routes/
+      "@assets/*": ["src/assets/*"],         // @assets/ 映射到 src/assets/
+      "@states/*": ["src/states/*"],         // @states/ 映射到 src/states/
+      "@services/*": ["src/services/*"],     // @services/ 映射到 src/services/
+      "@utils/*": ["src/utils/*"],           // @utils/ 映射到 src/utils/
+      "@lib/*": ["src/lib/*"],               // @lib/ 映射到 src/lib/
+      "@constants/*": ["src/constants/*"],   // @constants/ 映射到 src/constants/
+      "@connections/*": ["src/connections/*"], // @connections/ 映射到 src/connections/
+      "@store/*": ["src/store/*"],           // @store/ 映射到 src/store/
+      "@abis/*": ["src/abis/*"],             // @abis/ 映射到 src/abis/
+      "@types/*": ["src/types/*"]            // @types/ 映射到 src/types/
+    }
+  },
+
+  // 包含：指定需要编译的文件范围
+  // src/**/* 表示 src 目录下的所有文件和子目录中的文件
+  "include": ["src/**/*"],
+
+  // 排除：指定不需要编译的文件/目录
+  // node_modules: 第三方依赖包
+  // dist: 编译输出目录
+  // .history: 本地历史记录（如果使用了相关插件）
+  "exclude": ["node_modules", "dist", ".history"]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "jsc": {
+    // 以下是 JavaScript/TypeScript 解析器的配置项
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true,
+      "decorators": true,
+      "dynamicImport": true
+    },
+    // React/JSX 转换相关设置
+    "transform": {
+      "react": {
+        // 自动引入 React 的 JSX 运行时，省去手动 import React
+        "runtime": "automatic",
+        // 启用支持 React Fast Refresh（热更新）
+        "refresh": true,
+        // 关闭开发模式的额外断言，用于生产打包
+        "development": false,
+        // 指定自动导入的 JSX helper 名称
+        "pragma": "React.CreateElement",
+        // 指定自动导入的 Fragment helper 名称
+        "pragmaFrag": "React.Fragment"
+      }
+    },
+    // 编译后的目标版本为 ES2022
+    "target": "es2022",
+    // 启用宽松模式，允许一些可以放松安全性的编译优化
+    "loose": true,
+    // 使用外部辅助函数，避免重复内联 helper
+    "externalHelpers": true,
+    // Requires v1.2.50 or upper and requires target to be es2016 or upper.
+    "keepClassNames": true
+  },
+  "module": {
+    // 模块系统相关设置
+    "type": "es6",
+    // 强制严格模式，添加 "use strict" 指令
+    "strict": true,
+    // 保证输出始终带 strict 内容
+    "strictMode": true,
+    // 延迟加载模块帮助减少首屏请求
+    "lazy": true,
+    // 是否开启 CommonJS 与 ESModule 的互操作处理
+    "noInterop": false
+  },
+  // 是否开启代码压缩
+  "minify": true,
+  // 是否生成 source map，方便调试
+  "sourceMaps": true,
+  // 构建时排除这些路径
+  "exclude": ["node_modules","dist",".git"]
+}
