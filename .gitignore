@@ -42,7 +42,7 @@ geckodriver
 Thumbs.db
 
 # Large files
-public/favicon.ico
+# public/favicon.ico
 
 # Temporary files
 *.tmp
