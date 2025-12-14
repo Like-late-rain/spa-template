@@ -69,22 +69,22 @@
     // import { Header } from '@components/common'
     // 而不是 import { Header } from '../../../components/common'
     "paths": {
-      "@/*": ["src/*"],                      // @/ 映射到 src/
+      "@/*": ["src/*"], // @/ 映射到 src/
       "@components/*": ["src/components/*"], // @components/ 映射到 src/components/
-      "@hooks/*": ["src/hooks/*"],           // @hooks/ 映射到 src/hooks/
-      "@pages/*": ["src/pages/*"],           // @pages/ 映射到 src/pages/
-      "@layouts/*": ["src/layouts/*"],       // @layouts/ 映射到 src/layouts/
-      "@routes/*": ["src/routes/*"],         // @routes/ 映射到 src/routes/
-      "@assets/*": ["src/assets/*"],         // @assets/ 映射到 src/assets/
-      "@states/*": ["src/states/*"],         // @states/ 映射到 src/states/
-      "@services/*": ["src/services/*"],     // @services/ 映射到 src/services/
-      "@utils/*": ["src/utils/*"],           // @utils/ 映射到 src/utils/
-      "@lib/*": ["src/lib/*"],               // @lib/ 映射到 src/lib/
-      "@constants/*": ["src/constants/*"],   // @constants/ 映射到 src/constants/
+      "@hooks/*": ["src/hooks/*"], // @hooks/ 映射到 src/hooks/
+      "@pages/*": ["src/pages/*"], // @pages/ 映射到 src/pages/
+      "@layouts/*": ["src/layouts/*"], // @layouts/ 映射到 src/layouts/
+      "@routes/*": ["src/routes/*"], // @routes/ 映射到 src/routes/
+      "@assets/*": ["src/assets/*"], // @assets/ 映射到 src/assets/
+      "@states/*": ["src/states/*"], // @states/ 映射到 src/states/
+      "@services/*": ["src/services/*"], // @services/ 映射到 src/services/
+      "@utils/*": ["src/utils/*"], // @utils/ 映射到 src/utils/
+      "@lib/*": ["src/lib/*"], // @lib/ 映射到 src/lib/
+      "@constants/*": ["src/constants/*"], // @constants/ 映射到 src/constants/
       "@connections/*": ["src/connections/*"], // @connections/ 映射到 src/connections/
-      "@store/*": ["src/store/*"],           // @store/ 映射到 src/store/
-      "@abis/*": ["src/abis/*"],             // @abis/ 映射到 src/abis/
-      "@types/*": ["src/types/*"]            // @types/ 映射到 src/types/
+      "@stores/*": ["src/stores/*"], // @stores/ 映射到 src/stores/
+      "@abis/*": ["src/abis/*"], // @abis/ 映射到 src/abis/
+      "@types/*": ["src/types/*"] // @types/ 映射到 src/types/
     }
   },
 

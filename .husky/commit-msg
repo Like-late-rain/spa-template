@@ -1,0 +1,37 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# 读取 commit 消息
+commit_msg=$(cat "$1")
+
+# 定义 commit 消息规则（符合 Conventional Commits 格式）
+# 格式: type(scope?): subject
+# 例如: feat: 添加新功能 | fix(ui): 修复按钮样式 | docs: 更新文档
+commit_regex='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\(.+\))?: .{1,}'
+
+# 检查 commit 消息格式
+if ! echo "$commit_msg" | grep -qE "$commit_regex"; then
+  echo "❌ 错误: Commit 消息格式不正确！"
+  echo ""
+  echo "正确的格式应为: type(scope?): subject"
+  echo ""
+  echo "允许的 type:"
+  echo "  - feat:     新功能"
+  echo "  - fix:      修复 bug"
+  echo "  - docs:     文档变更"
+  echo "  - style:    代码格式（不影响代码运行）"
+  echo "  - refactor: 重构（既不是新功能也不是修复 bug）"
+  echo "  - perf:     性能优化"
+  echo "  - test:     测试相关"
+  echo "  - build:    构建系统或外部依赖变更"
+  echo "  - ci:       CI 配置文件和脚本变更"
+  echo "  - chore:    其他不修改 src 或测试文件的变更"
+  echo "  - revert:   回退之前的 commit"
+  echo ""
+  echo "示例:"
+  echo "  ✅ feat: 添加用户登录功能"
+  echo "  ✅ fix(ui): 修复按钮样式问题"
+  echo "  ✅ docs: 更新 README 文档"
+  echo ""
+  exit 1
+fi

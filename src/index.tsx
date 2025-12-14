@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { Loading } from '@/components/common';
 import { routes } from '@/routers';
+import './wdyr';
 import './index.css';
 
 const App = () => {

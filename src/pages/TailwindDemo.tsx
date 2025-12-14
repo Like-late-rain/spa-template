@@ -2,140 +2,138 @@ import type React from 'react';
 import { memo } from 'react';
 
 /**
- * Tailwind CSS 演示页面
- * 展示各种常用的 Tailwind 样式和组件
+ * Tailwind CSS 演示页面 - 未来科技感
+ * 展示赛博朋克风格的 Tailwind 样式和组件
  */
 const TailwindDemo: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div className="min-h-screen bg-dark-bg">
       {/* 页面标题 */}
       <div className="container mx-auto px-4 py-12">
-        <h1 className="text-5xl font-bold text-center text-gray-800 mb-4 animate-fade-in">
-          Tailwind CSS Demo
+        <h1 className="text-5xl font-bold text-center text-cyber-cyan mb-4 animate-slide-down">
+          主题展示
         </h1>
-        <p className="text-center text-gray-600 mb-12 text-lg">
-          展示经典的 Tailwind CSS 样式和组件
+        <p className="text-center text-cyber-blue mb-12 text-lg">
+          未来科技感 · 赛博朋克风格组件展示
         </p>
 
         {/* 卡片网格 */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {/* 主色调卡片 */}
-          <div className="bg-white rounded-lg shadow-card hover:shadow-soft transition-shadow duration-300 p-6">
+          {/* 青色霓虹卡片 */}
+          <div className="bg-dark-card rounded-lg shadow-neon-cyan hover:shadow-glass transition-all duration-300 p-6 border border-dark-border hover:border-cyber-cyan animate-float">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                P
+              <div className="w-12 h-12 bg-cyber-cyan rounded-full flex items-center justify-center text-dark-bg font-bold text-xl shadow-neon-cyan">
+                C
               </div>
-              <h3 className="ml-4 text-xl font-semibold text-gray-800">主色调</h3>
+              <h3 className="ml-4 text-xl font-semibold text-cyber-cyan">青色霓虹</h3>
             </div>
-            <p className="text-gray-600 mb-4">
-              使用自定义的 primary 颜色系列，从 50 到 950 共 11 个色阶。
-            </p>
+            <p className="text-gray-400 mb-4">赛博朋克经典青色，营造未来科技感氛围</p>
             <div className="flex flex-wrap gap-2">
-              <div className="w-8 h-8 bg-primary-300 rounded"></div>
+              <div className="w-8 h-8 bg-cyber-cyan rounded shadow-neon-cyan"></div>
               <div className="w-8 h-8 bg-primary-500 rounded"></div>
               <div className="w-8 h-8 bg-primary-700 rounded"></div>
             </div>
           </div>
 
-          {/* 次色调卡片 */}
-          <div className="bg-white rounded-lg shadow-card hover:shadow-soft transition-shadow duration-300 p-6">
+          {/* 紫色光晕卡片 */}
+          <div className="bg-dark-card rounded-lg shadow-neon-purple hover:shadow-glass transition-all duration-300 p-6 border border-dark-border hover:border-cyber-purple">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-secondary-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                S
+              <div className="w-12 h-12 bg-cyber-purple rounded-full flex items-center justify-center text-white font-bold text-xl shadow-neon-purple animate-glow">
+                P
               </div>
-              <h3 className="ml-4 text-xl font-semibold text-gray-800">次色调</h3>
+              <h3 className="ml-4 text-xl font-semibold text-cyber-purple">紫色光晕</h3>
             </div>
-            <p className="text-gray-600 mb-4">优雅的紫色系列，适合强调和装饰性元素。</p>
+            <p className="text-gray-400 mb-4">神秘的紫色光晕，增添科幻氛围</p>
             <div className="flex flex-wrap gap-2">
-              <div className="w-8 h-8 bg-secondary-300 rounded"></div>
-              <div className="w-8 h-8 bg-secondary-500 rounded"></div>
-              <div className="w-8 h-8 bg-secondary-700 rounded"></div>
+              <div className="w-8 h-8 bg-cyber-purple rounded shadow-neon-purple"></div>
+              <div className="w-8 h-8 bg-cyber-pink rounded"></div>
+              <div className="w-8 h-8 bg-cyber-blue rounded shadow-neon-blue"></div>
             </div>
           </div>
 
-          {/* 状态色卡片 */}
-          <div className="bg-white rounded-lg shadow-card hover:shadow-soft transition-shadow duration-300 p-6">
+          {/* 多彩赛博卡片 */}
+          <div className="bg-dark-card rounded-lg shadow-glass hover:shadow-neon-blue transition-all duration-300 p-6 border border-dark-border hover:border-cyber-blue">
             <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-success-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                ✓
+              <div className="w-12 h-12 bg-gradient-to-br from-cyber-cyan to-cyber-purple rounded-full flex items-center justify-center text-white font-bold text-xl">
+                ✦
               </div>
-              <h3 className="ml-4 text-xl font-semibold text-gray-800">状态色</h3>
+              <h3 className="ml-4 text-xl font-semibold text-cyber-blue">赛博配色</h3>
             </div>
-            <p className="text-gray-600 mb-4">包含成功、警告、危险等状态颜色系统。</p>
+            <p className="text-gray-400 mb-4">丰富的赛博朋克色彩系统</p>
             <div className="flex flex-wrap gap-2">
-              <div className="w-8 h-8 bg-success-500 rounded"></div>
-              <div className="w-8 h-8 bg-warning-500 rounded"></div>
-              <div className="w-8 h-8 bg-danger-500 rounded"></div>
+              <div className="w-8 h-8 bg-cyber-green rounded"></div>
+              <div className="w-8 h-8 bg-cyber-yellow rounded"></div>
+              <div className="w-8 h-8 bg-cyber-pink rounded"></div>
             </div>
           </div>
         </div>
 
         {/* 按钮示例 */}
-        <div className="bg-white rounded-lg shadow-card p-8 mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">按钮样式</h2>
+        <div className="bg-dark-card rounded-lg shadow-glass p-8 mb-12 border border-dark-border">
+          <h2 className="text-3xl font-bold text-cyber-cyan mb-6">霓虹按钮</h2>
           <div className="flex flex-wrap gap-4">
             <button
               type="button"
-              className="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 active:bg-primary-700 transition-colors duration-200 font-medium shadow-sm hover:shadow-md"
+              className="px-6 py-3 bg-cyber-cyan text-dark-bg rounded-lg hover:shadow-neon-cyan active:scale-95 transition-all duration-200 font-medium shadow-neon-cyan"
             >
-              主要按钮
+              青色霓虹
             </button>
             <button
               type="button"
-              className="px-6 py-3 bg-secondary-500 text-white rounded-lg hover:bg-secondary-600 active:bg-secondary-700 transition-colors duration-200 font-medium shadow-sm hover:shadow-md"
+              className="px-6 py-3 bg-cyber-purple text-white rounded-lg hover:shadow-neon-purple active:scale-95 transition-all duration-200 font-medium shadow-neon-purple"
             >
-              次要按钮
+              紫色光晕
             </button>
             <button
               type="button"
-              className="px-6 py-3 bg-white text-gray-700 border-2 border-gray-300 rounded-lg hover:bg-gray-50 active:bg-gray-100 transition-colors duration-200 font-medium"
+              className="px-6 py-3 bg-dark-hover text-cyber-blue border-2 border-cyber-blue rounded-lg hover:bg-cyber-blue hover:text-dark-bg hover:shadow-neon-blue active:scale-95 transition-all duration-200 font-medium"
             >
-              轮廓按钮
+              边框按钮
             </button>
             <button
               type="button"
-              className="px-6 py-3 bg-danger-500 text-white rounded-lg hover:bg-danger-600 active:bg-danger-700 transition-colors duration-200 font-medium shadow-sm hover:shadow-md"
+              className="px-6 py-3 bg-cyber-pink text-white rounded-lg hover:shadow-lg active:scale-95 transition-all duration-200 font-medium"
             >
-              危险按钮
+              粉色强调
             </button>
           </div>
         </div>
 
         {/* 表单示例 */}
-        <div className="bg-white rounded-lg shadow-card p-8 mb-12">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">表单元素</h2>
+        <div className="bg-dark-card rounded-lg shadow-glass p-8 mb-12 border border-dark-border">
+          <h2 className="text-3xl font-bold text-cyber-purple mb-6">未来表单</h2>
           <div className="max-w-md space-y-4">
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="username" className="block text-sm font-medium text-cyber-cyan mb-2">
                 用户名
               </label>
               <input
                 id="username"
                 type="text"
                 placeholder="请输入用户名"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-2 bg-dark-hover border border-dark-border rounded-lg focus:ring-2 focus:ring-cyber-cyan focus:border-cyber-cyan outline-none transition-all text-white placeholder-gray-500"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-cyber-cyan mb-2">
                 邮箱地址
               </label>
               <input
                 id="email"
                 type="email"
                 placeholder="your@email.com"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all"
+                className="w-full px-4 py-2 bg-dark-hover border border-dark-border rounded-lg focus:ring-2 focus:ring-cyber-cyan focus:border-cyber-cyan outline-none transition-all text-white placeholder-gray-500"
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+              <label htmlFor="message" className="block text-sm font-medium text-cyber-cyan mb-2">
                 留言
               </label>
               <textarea
                 id="message"
                 rows={4}
                 placeholder="请输入您的留言..."
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent outline-none transition-all resize-none"
+                className="w-full px-4 py-2 bg-dark-hover border border-dark-border rounded-lg focus:ring-2 focus:ring-cyber-cyan focus:border-cyber-cyan outline-none transition-all resize-none text-white placeholder-gray-500"
               ></textarea>
             </div>
           </div>
@@ -143,67 +141,70 @@ const TailwindDemo: React.FC = () => {
 
         {/* 通知/警告框 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          <div className="bg-success-50 border-l-4 border-success-500 p-4 rounded-r-lg">
+          <div className="bg-dark-card border-l-4 border-cyber-green p-4 rounded-r-lg shadow-glass animate-slide-up">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <span className="text-success-500 text-xl">✓</span>
+                <span className="text-cyber-green text-xl">✓</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-success-800">成功提示</h3>
-                <p className="mt-1 text-sm text-success-700">您的操作已成功完成！</p>
+                <h3 className="text-sm font-medium text-cyber-green">成功提示</h3>
+                <p className="mt-1 text-sm text-gray-400">系统连接成功，数据同步完成！</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-warning-50 border-l-4 border-warning-500 p-4 rounded-r-lg">
+          <div className="bg-dark-card border-l-4 border-cyber-yellow p-4 rounded-r-lg shadow-glass">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <span className="text-warning-500 text-xl">⚠</span>
+                <span className="text-cyber-yellow text-xl">⚠</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-warning-800">警告提示</h3>
-                <p className="mt-1 text-sm text-warning-700">请注意，这个操作可能需要一些时间。</p>
+                <h3 className="text-sm font-medium text-cyber-yellow">警告提示</h3>
+                <p className="mt-1 text-sm text-gray-400">检测到异常流量，正在分析中...</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-danger-50 border-l-4 border-danger-500 p-4 rounded-r-lg">
+          <div className="bg-dark-card border-l-4 border-cyber-pink p-4 rounded-r-lg shadow-glass">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <span className="text-danger-500 text-xl">✕</span>
+                <span className="text-cyber-pink text-xl">✕</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-danger-800">错误提示</h3>
-                <p className="mt-1 text-sm text-danger-700">抱歉，发生了一个错误，请重试。</p>
+                <h3 className="text-sm font-medium text-cyber-pink">错误提示</h3>
+                <p className="mt-1 text-sm text-gray-400">连接失败，请检查网络设置后重试。</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-primary-50 border-l-4 border-primary-500 p-4 rounded-r-lg">
+          <div className="bg-dark-card border-l-4 border-cyber-cyan p-4 rounded-r-lg shadow-glass">
             <div className="flex items-start">
               <div className="flex-shrink-0">
-                <span className="text-primary-500 text-xl">ℹ</span>
+                <span className="text-cyber-cyan text-xl">ℹ</span>
               </div>
               <div className="ml-3">
-                <h3 className="text-sm font-medium text-primary-800">信息提示</h3>
-                <p className="mt-1 text-sm text-primary-700">这里是一条普通的信息通知。</p>
+                <h3 className="text-sm font-medium text-cyber-cyan">信息提示</h3>
+                <p className="mt-1 text-sm text-gray-400">新版本已就绪，建议立即更新。</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* 动画示例 */}
-        <div className="bg-white rounded-lg shadow-card p-8">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">动画效果</h2>
+        <div className="bg-dark-card rounded-lg shadow-glass p-8 border border-dark-border">
+          <h2 className="text-3xl font-bold text-cyber-blue mb-6">赛博动画</h2>
           <div className="flex flex-wrap gap-6">
-            <div className="w-32 h-32 bg-gradient-to-br from-primary-400 to-primary-600 rounded-lg shadow-lg animate-bounce-slow flex items-center justify-center">
-              <span className="text-white font-bold">Bounce</span>
+            <div className="w-32 h-32 bg-gradient-to-br from-cyber-cyan to-cyber-blue rounded-lg shadow-neon-cyan animate-pulse-slow flex items-center justify-center">
+              <span className="text-white font-bold">脉冲</span>
             </div>
-            <div className="w-32 h-32 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-lg shadow-lg animate-fade-in flex items-center justify-center">
-              <span className="text-white font-bold">Fade In</span>
+            <div className="w-32 h-32 bg-gradient-to-br from-cyber-purple to-cyber-pink rounded-lg shadow-neon-purple animate-glow flex items-center justify-center">
+              <span className="text-white font-bold">发光</span>
             </div>
-            <div className="w-32 h-32 bg-gradient-to-br from-success-400 to-success-600 rounded-lg shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center cursor-pointer">
-              <span className="text-white font-bold">Hover Me</span>
+            <div className="w-32 h-32 bg-gradient-to-br from-cyber-blue to-cyber-purple rounded-lg shadow-neon-blue animate-float flex items-center justify-center">
+              <span className="text-white font-bold">浮动</span>
+            </div>
+            <div className="w-32 h-32 bg-cyber-green rounded-lg shadow-lg hover:scale-110 hover:shadow-neon-cyan transition-all duration-300 flex items-center justify-center cursor-pointer">
+              <span className="text-dark-bg font-bold">悬停</span>
             </div>
           </div>
         </div>
