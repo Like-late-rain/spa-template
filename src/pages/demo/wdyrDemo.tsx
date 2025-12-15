@@ -1,6 +1,6 @@
-import { useImmer } from '@/hooks/useImmer';
-import { counterAtom, doubleCountAtom, blank } from '@/stores/demoAtoms';
 import { useAtom, useAtomValue } from 'jotai';
+import { useImmer } from '@/hooks/useImmer';
+import { blank, counterAtom, doubleCountAtom } from '@/stores/demoAtoms';
 
 const Index = () => {
   const [data, setData] = useImmer({ str: '无意义渲染' });

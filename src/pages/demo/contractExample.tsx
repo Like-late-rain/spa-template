@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useAtomValue } from 'jotai';
+import { useState } from 'react';
 import { accountAtom, contractAtom } from '@/stores/web3Atoms';
 
 /**

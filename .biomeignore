@@ -1,12 +1,52 @@
+# Dependencies
 node_modules
+
+# Build output
 dist
 build
-coverage
 *.min.js
 *.bundle.js
+
+# Testing
+coverage
+.nyc_output
+cypress/screenshots
+cypress/videos
+
+# Framework specific
 .next
 out
-public
 .turbo
+
+# Static assets (usually don't need linting)
+public
+
 # Editor/IDE
 .history
+.vscode
+.idea
+*.swp
+*.swo
+
+# Environment files
+.env
+.env.*
+
+# Logs
+logs
+*.log
+
+# Cache
+.cache
+.eslintcache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Generated types (if you want to exclude them)
+src/types

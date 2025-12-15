@@ -1,9 +1,12 @@
+import type { Eip1193Provider, Signer } from 'ethers';
+import { BrowserProvider, Contract } from 'ethers';
 import { atom } from 'jotai';
-import type { Signer, Eip1193Provider } from 'ethers';
-import { BrowserProvider } from 'ethers';
-import type { UniversityCourse } from '@/types';
-import { UniversityCourse__factory } from '@/types';
+import AAVEPoolABI from '@/abis/AAVEPool.json';
+import ATokenABI from '@/abis/AToken.json';
 import addresses from '@/abis/addresses.json';
+import WETHABI from '@/abis/WETH.json';
+import type { UniversityCourse, YCToken } from '@/types';
+import { UniversityCourse__factory, YCToken__factory } from '@/types';
 
 // Signer 状态
 export const signerAtom = atom<Signer | null>(null);
@@ -17,6 +20,15 @@ export const accountAtom = atom<string | null>(null);
 // 账户余额（ETH）
 export const balanceAtom = atom<string | null>(null);
 
+// YCT 代币余额
+export const yctBalanceAtom = atom<string | null>(null);
+
+// WETH 余额
+export const wethBalanceAtom = atom<string | null>(null);
+
+// aWETH 余额（存款凭证）
+export const aWETHBalanceAtom = atom<string | null>(null);
+
 // 当前网络 ID
 export const chainIdAtom = atom<number | null>(null);
 
@@ -27,6 +39,15 @@ export const contractAtom = atom<UniversityCourse | null>((get) => {
 
   const contractAddress = addresses.UniversityCourse as `0x${string}`;
   return UniversityCourse__factory.connect(contractAddress, signer);
+});
+
+// 合约实例 - YCToken atom，自动根据 signer 创建
+export const ycTokenAtom = atom<YCToken | null>((get) => {
+  const signer = get(signerAtom);
+  if (!signer) return null;
+
+  const contractAddress = addresses.YCToken as `0x${string}`;
+  return YCToken__factory.connect(contractAddress, signer);
 });
 
 // 连接钱包的 action（会弹出授权窗口）
@@ -83,7 +104,6 @@ export const autoConnectWalletAtom = atom(null, async (_get, set) => {
 
     // 已授权，自动连接
     const provider = new BrowserProvider(ethereum);
-    console.log('🚀 ~ provider:', provider);
     const signer = await provider.getSigner();
     const address = await signer.getAddress();
 
@@ -134,6 +154,25 @@ export const refreshWalletAtom = atom(null, async (get, set) => {
   }
 });
 
+// 刷新 YCT 余额
+export const refreshYCTBalanceAtom = atom(null, async (get, set) => {
+  const ycToken = get(ycTokenAtom);
+  const account = get(accountAtom);
+
+  if (!ycToken || !account) {
+    return;
+  }
+
+  try {
+    const balance = await ycToken.balanceOf(account);
+    const balanceInYCT = (Number(balance) / 1e18).toFixed(4);
+    set(yctBalanceAtom, balanceInYCT);
+    console.log('🪙 YCT 余额:', balanceInYCT);
+  } catch (error) {
+    console.error('刷新 YCT 余额失败:', error);
+  }
+});
+
 // 切换网络
 export const switchNetworkAtom = atom(null, async (_get, set, targetChainId: number) => {
   const ethereum = (window as { ethereum?: Eip1193Provider }).ethereum;
@@ -161,5 +200,66 @@ export const switchNetworkAtom = atom(null, async (_get, set, targetChainId: num
       throw new Error('该网络未添加到钱包中');
     }
     throw error;
+  }
+});
+
+// AAVE 相关合约实例
+export const aavePoolAtom = atom(async (get) => {
+  const signer = get(signerAtom);
+  if (!signer) return null;
+
+  return new Contract(addresses.AAVEPool as `0x${string}`, AAVEPoolABI.abi, signer);
+});
+
+// WETH 合约实例
+export const wethContractAtom = atom(async (get) => {
+  const signer = get(signerAtom);
+  if (!signer) return null;
+
+  return new Contract(addresses.WETH as `0x${string}`, WETHABI.abi, signer);
+});
+
+// aWETH(aToken) 合约实例
+export const aWETHContractAtom = atom(async (get) => {
+  const signer = get(signerAtom);
+  if (!signer) return null;
+
+  return new Contract(addresses.aWETH as `0x${string}`, ATokenABI.abi, signer);
+});
+
+// 刷新 WETH 余额
+export const refreshWETHBalanceAtom = atom(null, async (get, set) => {
+  const wethContract = await get(wethContractAtom);
+  const account = get(accountAtom);
+  if (!wethContract || !account) {
+    return;
+  }
+
+  try {
+    const balance = await wethContract.balanceOf(account);
+    const balanceInEth = (Number(balance) / 1e18).toFixed(4);
+    set(wethBalanceAtom, balanceInEth);
+    console.log('🪙 WETH 余额:', balanceInEth);
+  } catch {
+    console.error('刷新 WETH 余额失败:');
+  }
+});
+
+// 刷新 aWETH 余额
+export const refreshAWETHBalanceAtom = atom(null, async (get, set) => {
+  const aWETHContract = await get(aWETHContractAtom);
+  const account = get(accountAtom);
+
+  if (!aWETHContract || !account) {
+    return;
+  }
+
+  try {
+    const balance = await aWETHContract.balanceOf(account);
+    const balanceInEth = (Number(balance) / 1e18).toFixed(4);
+    set(aWETHBalanceAtom, balanceInEth);
+    console.log('📊 aWETH 余额:', balanceInEth);
+  } catch (error) {
+    console.error('刷新 aWETH 余额失败:', error);
   }
 });

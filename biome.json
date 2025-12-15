@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx"]
+    "includes": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.js", "src/**/*.jsx", "!src/types/**/*.ts"]
   },
   "formatter": {
     "enabled": false
@@ -59,7 +59,9 @@
       "style": {
         "recommended": true,
         "useConst": "error",
-        "useTemplate": "error"
+        "useTemplate": "error",
+        "useImportType": "off",
+        "useNodejsImportProtocol": "off"
       },
       "suspicious": {
         "recommended": true,

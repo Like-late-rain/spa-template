@@ -11,31 +11,15 @@ interface MenuItem {
 }
 
 interface HeaderProps {
-  logo?: React.ReactNode;
-  logoText?: string;
   menuItems?: MenuItem[];
-  rightContent?: React.ReactNode;
-  variant?: 'light' | 'dark' | 'primary';
-  className?: string;
 }
 
 /**
  * Header 导航栏组件 - 使用 Tailwind CSS
- * @param logo - 自定义 Logo 节点
- * @param logoText - Logo 文字，默认为 "My App"
  * @param menuItems - 导航菜单项
- * @param rightContent - 右侧自定义内容（如登录按钮、用户头像等）
- * @param variant - 主题变体：light(浅色), dark(深色), primary(主题色)
  * @param className - 额外的自定义类名
  */
-const Header: React.FC<HeaderProps> = ({
-  logo,
-  logoText = 'My App',
-  menuItems = [],
-  rightContent,
-  variant = 'light',
-  className = '',
-}) => {
+const Header: React.FC<HeaderProps> = ({ menuItems = [] }) => {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
 
@@ -46,30 +30,6 @@ const Header: React.FC<HeaderProps> = ({
     }
     return false;
   };
-
-  //   // 根据变体选择不同的样式
-  //   const variantStyles = {
-  //     light: {
-  //       header: 'bg-white text-gray-800 shadow-md',
-  //       logo: 'text-gray-800 hover:text-primary-600',
-  //       menuItem: 'text-gray-700 hover:text-primary-600 hover:bg-gray-50',
-  //       menuItemActive: 'text-primary-600 border-primary-600',
-  //     },
-  //     dark: {
-  //       header: 'bg-gray-900 text-white shadow-lg',
-  //       logo: 'text-white hover:text-gray-200',
-  //       menuItem: 'text-gray-300 hover:text-white hover:bg-gray-800',
-  //       menuItemActive: 'text-white border-white',
-  //     },
-  //     primary: {
-  //       header: 'bg-primary-600 text-white shadow-lg',
-  //       logo: 'text-white hover:text-primary-100',
-  //       menuItem: 'text-primary-100 hover:text-white hover:bg-primary-700',
-  //       menuItemActive: 'text-white border-white',
-  //     },
-  //   };
-
-  //   const styles = variantStyles[variant];
 
   return (
     <nav className="sticky top-0 z-50 glass border-b border-white/10">
@@ -158,48 +118,7 @@ const Header: React.FC<HeaderProps> = ({
           <div className=" flex items-center space-x-4">
             <ConnectButton />
           </div>
-
-          {/* Connect Button */}
-          {/* <div className="hidden md:flex items-center space-x-4">
-            <div className="relative">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-cyber-cyan via-cyber-blue to-cyber-purple rounded-lg blur opacity-30 group-hover:opacity-70 transition"></div>
-              <div className="relative">
-                <ConnectButton />
-              </div>
-            </div>
-          </div> */}
-
-          {/* Mobile Menu Button */}
-          {/* <div className="md:hidden flex items-center space-x-4">
-            <ConnectButton />
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-300 hover:text-cyber-cyan transition"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div> */}
         </div>
-
-        {/* Mobile Menu */}
-        {/* {isMenuOpen && (
-          <div className="md:hidden py-4 space-y-2 animate-slide-down">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`block px-4 py-3 rounded-lg transition ${
-                  isActive(link.href)
-                    ? 'bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/30'
-                    : 'text-gray-300 hover:bg-white/5 hover:text-white'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        )} */}
       </div>
     </nav>
   );

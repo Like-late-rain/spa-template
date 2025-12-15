@@ -122,37 +122,13 @@ const Index = () => {
   };
 
   return (
-    <div style={{ padding: '20px', position: 'relative' }}>
+    <div className="p-5 relative">
       {!account ? (
         <button
           type="button"
           onClick={handleConnect}
           aria-label="Connect wallet"
-          style={{
-            background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '12px',
-            padding: '10px 24px',
-            fontSize: '14px',
-            fontWeight: '600',
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(139, 92, 246, 0.3)',
-            transition: 'all 0.2s ease',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.5px',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-1px)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(139, 92, 246, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 2px 8px rgba(139, 92, 246, 0.3)';
-          }}
+          className="bg-gradient-to-br from-purple-600 to-pink-500 text-white border-none rounded-xl px-6 py-2.5 text-sm font-semibold cursor-pointer shadow-[0_2px_8px_rgba(139,92,246,0.3)] transition-all duration-200 inline-flex items-center gap-2 uppercase tracking-wide hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(139,92,246,0.4)]"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-label="User icon">
             <title>User icon</title>
@@ -174,204 +150,68 @@ const Index = () => {
         <button
           ref={buttonRef}
           type="button"
-          style={{
-            position: 'relative',
-            background: 'rgba(30, 41, 59, 0.6)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(148, 163, 184, 0.2)',
-            borderRadius: '12px',
-            padding: '6px 12px',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-          }}
+          className="relative bg-slate-800/60 backdrop-blur-xl border border-slate-400/20 rounded-xl px-3 py-1.5 cursor-pointer transition-all duration-200 inline-flex items-center gap-2.5 hover:bg-slate-800/80 hover:border-purple-500/40"
           onClick={() => setShowDetails(!showDetails)}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(30, 41, 59, 0.8)';
-            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(30, 41, 59, 0.6)';
-            e.currentTarget.style.borderColor = 'rgba(148, 163, 184, 0.2)';
-          }}
         >
-          <div
-            style={{
-              width: '32px',
-              height: '32px',
-              borderRadius: '50%',
-              background: 'linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '18px',
-              flexShrink: 0,
-            }}
-          >
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-lg flex-shrink-0">
             🐷
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-            <div
-              style={{
-                color: '#E2E8F0',
-                fontSize: '13px',
-                fontWeight: '600',
-                fontFamily: 'monospace',
-              }}
-            >
+          <div className="flex flex-col items-start">
+            <div className="text-slate-200 text-[13px] font-semibold font-mono">
               {formatAddress(account)}
             </div>
-            <div
-              style={{
-                color: '#10B981',
-                fontSize: '11px',
-                fontWeight: '500',
-              }}
-            >
-              {balance} ETH
-            </div>
+            <div className="text-green-500 text-[11px] font-medium">{balance} ETH</div>
           </div>
 
-          <div
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: '#10B981',
-              boxShadow: '0 0 6px rgba(16, 185, 129, 0.8)',
-              flexShrink: 0,
-            }}
-          />
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_6px_rgba(16,185,129,0.8)] flex-shrink-0" />
         </button>
       )}
 
       {showDetails && account && (
         <div
           ref={detailsRef}
-          style={{
-            position: 'absolute',
-            top: '78px',
-            left: '20px',
-            background: 'rgba(17, 24, 39, 0.98)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(139, 92, 246, 0.3)',
-            borderRadius: '16px',
-            padding: '16px',
-            minWidth: '280px',
-            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4)',
-            zIndex: 1000,
-            animation: 'slideDown 0.2s ease',
-          }}
+          className="absolute top-[78px] left-5 bg-dark-card backdrop-blur-3xl border border-purple-500/30 rounded-2xl p-4 min-w-[280px] shadow-[0_8px_24px_rgba(0,0,0,0.4)] z-[1000] animate-slide-down"
         >
-          <div
-            style={{
-              color: '#94A3B8',
-              fontSize: '11px',
-              fontWeight: '600',
-              textTransform: 'uppercase',
-              marginBottom: '12px',
-              letterSpacing: '0.5px',
-            }}
-          >
+          <div className="text-slate-400 text-[11px] font-semibold uppercase mb-3 tracking-wide">
             钱包详情
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div className="flex flex-col gap-3">
             <div>
-              <div style={{ color: '#64748B', fontSize: '11px', marginBottom: '6px' }}>
-                完整地址
-              </div>
-              <div
-                style={{
-                  color: '#E2E8F0',
-                  fontSize: '12px',
-                  fontFamily: 'monospace',
-                  background: 'rgba(51, 65, 85, 0.6)',
-                  padding: '8px 10px',
-                  borderRadius: '8px',
-                  wordBreak: 'break-all',
-                }}
-              >
+              <div className="text-slate-500 text-[11px] mb-1.5">完整地址</div>
+              <div className="text-slate-200 text-xs font-mono bg-slate-700/60 px-2.5 py-2 rounded-lg break-all">
                 {account}
               </div>
             </div>
 
             <div>
-              <div style={{ color: '#64748B', fontSize: '11px', marginBottom: '6px' }}>余额</div>
-              <div
-                style={{
-                  color: '#10B981',
-                  fontSize: '18px',
-                  fontWeight: '700',
-                }}
-              >
-                {balance} ETH
-              </div>
+              <div className="text-slate-500 text-[11px] mb-1.5">余额</div>
+              <div className="text-green-500 text-lg font-bold">{balance} ETH</div>
             </div>
 
             <div>
-              <div
-                style={{
-                  color: '#64748B',
-                  fontSize: '11px',
-                  marginBottom: '6px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
+              <div className="text-slate-500 text-[11px] mb-1.5 flex justify-between items-center">
                 <span>网络</span>
                 <button
                   type="button"
                   onClick={() => setShowNetworks(!showNetworks)}
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    color: '#8B5CF6',
-                    fontSize: '11px',
-                    cursor: 'pointer',
-                    padding: '2px 6px',
-                    borderRadius: '4px',
-                    transition: 'background 0.2s',
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'rgba(139, 92, 246, 0.1)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'transparent';
-                  }}
+                  className="bg-transparent border-none text-purple-500 text-[11px] cursor-pointer px-1.5 py-0.5 rounded transition-colors hover:bg-purple-500/10"
                 >
                   切换
                 </button>
               </div>
 
               {!showNetworks ? (
-                <div
-                  style={{
-                    color: '#E2E8F0',
-                    fontSize: '13px',
-                    fontWeight: '500',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                  }}
-                >
+                <div className="text-slate-200 text-[13px] font-medium flex items-center gap-1.5">
                   <span
-                    style={{
-                      width: '6px',
-                      height: '6px',
-                      borderRadius: '50%',
-                      background: getNetworkColor(chainId),
-                      display: 'inline-block',
-                    }}
+                    className="w-1.5 h-1.5 rounded-full inline-block"
+                    style={{ background: getNetworkColor(chainId) }}
                   />
                   {getNetworkName(chainId)}
                 </div>
               ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <div className="flex flex-col gap-1.5">
                   {Object.entries(NETWORKS).map(([id, network]) => {
                     const networkId = Number(id);
                     const isActive = chainId === networkId;
@@ -380,59 +220,22 @@ const Index = () => {
                         key={id}
                         type="button"
                         onClick={() => handleSwitchNetwork(networkId)}
-                        style={{
-                          background: isActive
-                            ? 'rgba(139, 92, 246, 0.2)'
-                            : 'rgba(51, 65, 85, 0.4)',
-                          border: `1px solid ${isActive ? 'rgba(139, 92, 246, 0.5)' : 'transparent'}`,
-                          borderRadius: '8px',
-                          padding: '8px 10px',
-                          cursor: isActive ? 'default' : 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '8px',
-                          transition: 'all 0.2s',
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isActive) {
-                            e.currentTarget.style.background = 'rgba(51, 65, 85, 0.6)';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isActive) {
-                            e.currentTarget.style.background = 'rgba(51, 65, 85, 0.4)';
-                          }
-                        }}
+                        className={`rounded-lg px-2.5 py-2 flex items-center gap-2 transition-all duration-200 ${
+                          isActive
+                            ? 'bg-purple-500/20 border border-purple-500/50 cursor-default'
+                            : 'bg-slate-700/40 border border-transparent cursor-pointer hover:bg-slate-700/60'
+                        }`}
                       >
                         <span
-                          style={{
-                            width: '8px',
-                            height: '8px',
-                            borderRadius: '50%',
-                            background: network.color,
-                            display: 'inline-block',
-                          }}
+                          className="w-2 h-2 rounded-full inline-block"
+                          style={{ background: network.color }}
                         />
                         <span
-                          style={{
-                            color: '#E2E8F0',
-                            fontSize: '13px',
-                            fontWeight: isActive ? '600' : '500',
-                          }}
+                          className={`text-slate-200 text-[13px] ${isActive ? 'font-semibold' : 'font-medium'}`}
                         >
                           {network.name}
                         </span>
-                        {isActive && (
-                          <span
-                            style={{
-                              marginLeft: 'auto',
-                              color: '#10B981',
-                              fontSize: '11px',
-                            }}
-                          >
-                            ✓
-                          </span>
-                        )}
+                        {isActive && <span className="ml-auto text-green-500 text-[11px]">✓</span>}
                       </button>
                     );
                   })}
@@ -442,30 +245,6 @@ const Index = () => {
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes pulse {
-          0%, 100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(1.1);
-          }
-        }
-
-        @keyframes slideDown {
-          from {
-            opacity: 0;
-            transform: translateY(-10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };

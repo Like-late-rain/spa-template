@@ -3,7 +3,7 @@
  * 这个文件仅用于演示，实际使用时可以删除
  */
 
-import React from 'react';
+import type React from 'react';
 import Header from './Header';
 
 /**
@@ -91,9 +91,7 @@ export const HeaderWithRightContent: React.FC = () => {
     </>
   );
 
-  return (
-    <Header logoText="平台" menuItems={menuItems} rightContent={rightContent} />
-  );
+  return <Header logoText="平台" menuItems={menuItems} rightContent={rightContent} />;
 };
 
 /**
@@ -188,11 +186,5 @@ export const CompleteHeaderExample: React.FC = () => {
     </div>
   );
 
-  return (
-    <Header
-      logoText="企业平台"
-      menuItems={menuItems}
-      rightContent={userAvatar}
-    />
-  );
+  return <Header logoText="企业平台" menuItems={menuItems} rightContent={userAvatar} />;
 };

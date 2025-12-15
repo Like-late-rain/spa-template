@@ -9,15 +9,21 @@ const PageNotFoundView = lazy(() => import('@/components/common/PageNotFoundView
 // Home page component
 const HomePage = lazy(() => import('@/pages/home'));
 
-// About page component
-const AboutPage = lazy(() => import('@/pages/aboutPage'));
-
 const TailwindDemo = lazy(() => import('@/pages/TailwindDemo'));
+
+const Market = lazy(() => import('@/pages/market'));
+const CourseDetail = lazy(() => import('@/pages/course/[id]'));
+
+const Aave = lazy(() => import('@/pages/aave'));
+
+const Profile = lazy(() => import('@/pages/profile'));
 
 // Demo pages
 const WdyrDemo = lazy(() => import('@/pages/demo/wdyrDemo'));
 const JotaiDemo = lazy(() => import('@/pages/demo/jotaiDemo'));
-const ContractExample = lazy(() => import('@/pages/demo/ContractExample'));
+const ContractExample = lazy(() => import('@/pages/demo/contractExample'));
+const CreateCourse = lazy(() => import('@/pages/createCourse'));
+const Exchange = lazy(() => import('@/pages/exchange'));
 
 // Route configuration
 export const routes: RouteObject[] = [
@@ -38,10 +44,50 @@ export const routes: RouteObject[] = [
         ),
       },
       {
-        path: 'about',
+        path: 'market',
         element: (
           <Suspense fallback={<Loading />}>
-            <AboutPage />
+            <Market />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'course/:id',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CourseDetail />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'create-course',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <CreateCourse />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'exchange',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Exchange />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'aave',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Aave />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'profile',
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Profile />
           </Suspense>
         ),
       },

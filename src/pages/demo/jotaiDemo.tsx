@@ -1,12 +1,12 @@
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useEffect } from 'react';
 import {
   counterActionsAtom,
   counterAtom,
   doubleCountAtom,
-  userAtom,
   todoListAtom,
+  userAtom,
 } from '@/stores/demoAtoms';
-import { useEffect } from 'react';
 
 /**
  * Jotai 状态管理演示组件

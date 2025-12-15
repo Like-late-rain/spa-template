@@ -1,11 +1,15 @@
+import { Header } from '@components/common';
 import { memo } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header } from '@components/common';
 
 const Layout = () => {
   const menuItems = [
     { label: '首页', path: '/' },
-    { label: '关于', path: '/about' },
+    { label: '课程市场', path: '/market' },
+    { label: '创建课程', path: '/create-course' },
+    { label: '兑换中心', path: '/exchange' },
+    { label: '理财', path: '/aave' },
+    { label: '个人中心', path: '/profile' },
     { label: '主题展示', path: '/theme-display' },
     {
       label: 'Demo',
@@ -33,7 +37,7 @@ const Layout = () => {
         ></div>
       </div>
       {/* 导航栏 */}
-      <Header logoText="My App" menuItems={menuItems} />
+      <Header menuItems={menuItems} />
 
       {/* 主内容区 */}
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
