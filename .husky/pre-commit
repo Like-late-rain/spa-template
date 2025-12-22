@@ -1,5 +1,2 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # 运行 lint-staged 对暂存的文件进行检查和格式化
 yarn lint-staged

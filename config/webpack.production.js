@@ -12,8 +12,8 @@ module.exports = {
   output: {
     // 打包文件的输出目录
     path: join(__dirname, '../dist'),
-    // 静态资源的公共路径，使用相对路径以支持部署到任意路径
-    publicPath: './',
+    // 静态资源的公共路径，使用绝对路径确保在任何路由下都能正确加载
+    publicPath: '/',
     // JS 文件输出路径和命名规则，使用 contenthash 实现长期缓存
     filename: 'scripts/[name].[contenthash:5].bundle.js',
     // 资源文件（如图片）的输出路径和命名规则
@@ -52,6 +52,10 @@ module.exports = {
     react: 'React',
     // ReactDOM 库使用全局变量 ReactDOM
     'react-dom': 'ReactDOM',
+    'react-dom/client': 'ReactDOM',
+    '@remix-run/router': 'RemixRouter',
+    'react-router': 'ReactRouter',
+    'react-router-dom': 'ReactRouterDOM',
   },
   // webpack 插件配置
   plugins: [
