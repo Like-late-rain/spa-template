@@ -1,9 +1,16 @@
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import { BookOpen, User, Wallet } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import CourseCard from '@/components/common/CourseCard';
 import { useYCToken } from '@/hooks/useYCToken';
-import { accountAtom, balanceAtom, contractAtom, signerAtom } from '@/stores/web3Atoms';
+import { updateUser } from '@/services/userApi';
+import {
+  accountAtom,
+  balanceAtom,
+  contractAtom,
+  currentUserAtom,
+  signerAtom,
+} from '@/stores/web3Atoms';
 import type { Course } from '@/types/course';
 import { shortenAddress } from '@/utils/helpers';
 import { dismissToast, showErrorToast, showLoadingToast, showSuccessToast } from '@/utils/toast';
@@ -11,52 +18,47 @@ import { dismissToast, showErrorToast, showLoadingToast, showSuccessToast } from
 export default function Profile() {
   const account = useAtomValue(accountAtom);
   const ethBalance = useAtomValue(balanceAtom);
-  const { yctBalance } = useYCToken();
+  const { yctBalance, refetchBalance } = useYCToken();
   const signer = useAtomValue(signerAtom);
   const contract = useAtomValue(contractAtom);
+  const currentUser = useAtomValue(currentUserAtom);
+  const setCurrentUser = useSetAtom(currentUserAtom);
+
   const isConnected = !!account;
 
   // 课程相关状态
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [createdCourses, setCreatedCourses] = useState<Course[]>([]); // 我创建的课程
+  const [purchasedCourses, setPurchasedCourses] = useState<Course[]>([]); // 我购买的课程
+  const [activeTab, setActiveTab] = useState<'created' | 'purchased'>('created'); // 当前激活的 Tab
 
-  const [nickname, setNickname] = useState('');
+  const [nickname, setNickname] = useState(currentUser?.name || '');
   const [isEditingNickname, setIsEditingNickname] = useState(false);
 
-  // 从 localStorage 加载已保存的昵称
+  // 在第30行后添加
   useEffect(() => {
-    if (account) {
-      const stored = localStorage.getItem(`nickname_${account}`);
-      if (stored) {
-        try {
-          const data = JSON.parse(stored);
-          setNickname(data.nickname);
-        } catch (e) {
-          console.error('加载昵称失败:', e);
-          setNickname('');
-        }
-      } else {
-        setNickname('');
-      }
-      setIsEditingNickname(false);
+    // 当 currentUser 更新时，同步到 nickname
+    if (currentUser?.name) {
+      setNickname(currentUser.name);
     }
-  }, [account]);
+  }, [currentUser]);
 
-  // 获取学生已购买的课程
+  // 获取我创建的课程和购买的课程
   useEffect(() => {
-    const fetchStudentCourses = async () => {
+    const fetchAllCourses = async () => {
       if (!contract || !account) {
-        setCourses([]);
+        setCreatedCourses([]);
+        setPurchasedCourses([]);
         return;
       }
 
       try {
-        // 假设合约有 getStudentCourses 方法
-        const ids = await contract.getStudentCourses(account);
-        const courseIdsArray = ids.map((id: bigint) => Number(id));
+        // 1️⃣ 获取我创建的课程
+        // 使用 getInstructorCourses 方法直接获取我创建的课程 ID
+        const createdIds = await contract.getInstructorCourses(account);
+        const createdIdsArray = createdIds.map((id: bigint) => Number(id));
 
-        // 获取每个课程的详情
-        const coursesData = await Promise.all(
-          courseIdsArray.map(async (id: number) => {
+        const createdCoursesData = await Promise.all(
+          createdIdsArray.map(async (id: number) => {
             const courseData = await contract.getCourse(id);
             return {
               id: Number(courseData.id),
@@ -71,16 +73,53 @@ export default function Profile() {
             };
           })
         );
-        setCourses(coursesData);
+        setCreatedCourses(createdCoursesData);
+
+        // 2️⃣ 获取我购买的课程
+        const purchasedIds = await contract.getStudentCourses(account);
+        const purchasedIdsArray = purchasedIds.map((id: bigint) => Number(id));
+
+        const purchasedCoursesData = await Promise.all(
+          purchasedIdsArray.map(async (id: number) => {
+            const courseData = await contract.getCourse(id);
+            return {
+              id: Number(courseData.id),
+              title: courseData.title,
+              description: courseData.description,
+              coverUrl: courseData.coverUrl,
+              priceYCT: courseData.priceYCT,
+              instructor: courseData.instructor,
+              isActive: courseData.isActive,
+              createdAt: Number(courseData.createdAt),
+              totalStudents: Number(courseData.totalStudents),
+            };
+          })
+        );
+        setPurchasedCourses(purchasedCoursesData);
+
+        console.log('✅ 课程加载完成:', {
+          created: createdCoursesData.length,
+          purchased: purchasedCoursesData.length,
+        });
       } catch (error) {
-        console.error('获取学生课程失败:', error);
-        setCourses([]);
+        console.error('获取课程失败:', error);
+        setCreatedCourses([]);
+        setPurchasedCourses([]);
       }
     };
 
-    fetchStudentCourses();
+    fetchAllCourses();
   }, [contract, account]);
 
+  // 刷新 YCT 余额
+  useEffect(() => {
+    // 当钱包连接且合约加载完成时，刷新 YCT 余额
+    if (account && contract) {
+      refetchBalance();
+    }
+  }, [account, contract, refetchBalance]);
+
+  // 保存昵称
   const handleSaveNickname = async () => {
     if (!nickname || !account) {
       showErrorToast('请输入昵称');
@@ -97,30 +136,37 @@ export default function Profile() {
       return;
     }
 
+    if (!currentUser) {
+      showErrorToast('用户信息加载中，请稍后再试');
+      return;
+    }
+
     try {
       showLoadingToast('请在 MetaMask 中签名...');
 
       // 创建签名消息
       const timestamp = Date.now();
-      const message = `设置昵称为: ${nickname}\n\n地址: ${account}\n时间戳: ${timestamp}`;
+      const message = `更新个人信息\n\n名称: ${nickname}\n地址: ${account}\n时间戳: ${timestamp}`;
 
       // 使用 ethers.js 的 signer 进行签名
       const signature = await signer.signMessage(message);
+      console.log('🚀 ~ handleSaveNickname ~ signature:', signature);
+      console.log('currentUser======>>>>', currentUser);
+      dismissToast();
+      showLoadingToast('正在保存...');
 
-      // 保存到 localStorage（在实际应用中应该发送到后端）
-      const data = {
-        nickname,
-        address: account,
+      // 调用后端 API 更新用户信息
+      const updatedUser = await updateUser(currentUser.id, {
+        name: nickname,
         signature,
         timestamp,
-        message,
-      };
-
-      localStorage.setItem(`nickname_${account}`, JSON.stringify(data));
-      setIsEditingNickname(false);
+      });
 
       dismissToast();
+      setCurrentUser(updatedUser);
       showSuccessToast('昵称设置成功！');
+      setIsEditingNickname(false);
+      console.log('✅ 用户信息已更新:', updatedUser);
     } catch (error) {
       dismissToast();
       const errorMessage = error instanceof Error ? error.message : '未知错误';
@@ -129,9 +175,9 @@ export default function Profile() {
       if (errorMessage.includes('user rejected') || errorCode === 'ACTION_REJECTED') {
         showErrorToast('签名被取消');
       } else {
-        showErrorToast(`签名失败: ${errorMessage}`);
+        showErrorToast(`更新失败: ${errorMessage}`);
       }
-      console.error('签名错误:', error);
+      console.error('更新用户信息错误:', error);
     }
   };
 
@@ -194,7 +240,7 @@ export default function Profile() {
                   </div>
                 ) : (
                   <h2 className="text-3xl font-bold gradient-text">
-                    {nickname || shortenAddress(account || '')}
+                    {currentUser?.name || currentUser?.username || shortenAddress(account || '')}
                   </h2>
                 )}
                 <button
@@ -256,20 +302,79 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* 我的课程 */}
+      {/* 我的课程 - 带 Tab 切换 */}
       <div className="relative">
         <div className="absolute -inset-1 bg-gradient-to-r from-cyber-blue to-cyber-purple rounded-2xl blur opacity-10"></div>
         <div className="relative glass rounded-2xl p-8 border border-white/10">
-          <div className="flex items-center space-x-3 mb-8">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center">
-              <BookOpen className="text-white" size={24} />
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyber-blue to-cyber-purple flex items-center justify-center">
+                <BookOpen className="text-white" size={24} />
+              </div>
+              <h2 className="text-3xl font-bold gradient-text">我的课程</h2>
             </div>
-            <h2 className="text-3xl font-bold gradient-text">我的课程</h2>
+
+            {/* Tab 切换按钮 */}
+            <div className="flex items-center space-x-2 glass rounded-lg p-1 border border-white/10">
+              <button
+                type="button"
+                onClick={() => setActiveTab('created')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'created'
+                    ? 'bg-gradient-to-r from-cyber-cyan to-cyber-blue text-white shadow-neon-cyan'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                我创建的 ({createdCourses.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('purchased')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === 'purchased'
+                    ? 'bg-gradient-to-r from-cyber-cyan to-cyber-blue text-white shadow-neon-cyan'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                我购买的 ({purchasedCourses.length})
+              </button>
+            </div>
           </div>
 
-          {courses && courses.length > 0 ? (
+          {/* 课程列表 - 根据 activeTab 显示不同内容 */}
+          {activeTab === 'created' ? (
+            // 我创建的课程
+            createdCourses.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {createdCourses.map((course) => (
+                  <CourseCard key={course.id} course={course} />
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="relative inline-block mb-6">
+                  <div className="absolute inset-0 bg-cyber-blue/20 blur-2xl rounded-full"></div>
+                  <div className="relative glass rounded-full p-8 border border-cyber-blue/30">
+                    <BookOpen size={64} className="text-cyber-blue mx-auto" />
+                  </div>
+                </div>
+                <p className="text-xl text-gray-400 mb-2">还没有创建任何课程</p>
+                <p className="text-sm text-gray-500 mb-6">创建你的第一个课程吧</p>
+                <a
+                  href="/create-course"
+                  className="group relative inline-flex items-center justify-center"
+                >
+                  <div className="absolute -inset-1 bg-gradient-to-r from-cyber-cyan to-cyber-blue rounded-xl blur opacity-60 group-hover:opacity-100 transition"></div>
+                  <div className="relative px-6 py-3 bg-gradient-to-r from-cyber-cyan to-cyber-blue rounded-xl font-bold text-white hover:scale-105 transition">
+                    创建课程
+                  </div>
+                </a>
+              </div>
+            )
+          ) : // 我购买的课程
+          purchasedCourses.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {courses.map((course) => (
+              {purchasedCourses.map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
             </div>

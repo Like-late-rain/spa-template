@@ -5,8 +5,10 @@ import AAVEPoolABI from '@/abis/AAVEPool.json';
 import ATokenABI from '@/abis/AToken.json';
 import addresses from '@/abis/addresses.json';
 import WETHABI from '@/abis/WETH.json';
+import { walletLogin } from '@/services/userApi';
 import type { UniversityCourse, YCToken } from '@/types';
 import { UniversityCourse__factory, YCToken__factory } from '@/types';
+import { User } from '@/types/users';
 
 // Signer 状态
 export const signerAtom = atom<Signer | null>(null);
@@ -54,7 +56,7 @@ export const ycTokenAtom = atom<YCToken | null>((get) => {
 export const connectWalletAtom = atom(null, async (_get, set) => {
   // 类型断言：告诉 TypeScript window.ethereum 存在
   const ethereum = (window as { ethereum?: Eip1193Provider }).ethereum;
-
+  console.log('手动连接···');
   if (!ethereum) {
     throw new Error('请安装 MetaMask 或其他以太坊钱包');
   }
@@ -80,13 +82,23 @@ export const connectWalletAtom = atom(null, async (_get, set) => {
   set(balanceAtom, balanceInEth);
   set(chainIdAtom, chainId);
 
+  // 钱包连接成功后，自动调用后端登录/注册
+  try {
+    const user = await walletLogin(address);
+    set(currentUserAtom, user);
+    console.log('✅ 用户登录成功:', user);
+  } catch (error) {
+    console.error('❌ 用户登录失败:', error);
+    // 登录失败不影响钱包连接，只是用户信息为空
+  }
+
   return { signer, address, balance: balanceInEth, chainId };
 });
 
 // 自动重连（不会弹窗，只在已授权时连接）
 export const autoConnectWalletAtom = atom(null, async (_get, set) => {
   const ethereum = (window as { ethereum?: Eip1193Provider }).ethereum;
-
+  console.log('调用自动登录');
   if (!ethereum) {
     return null;
   }
@@ -120,6 +132,16 @@ export const autoConnectWalletAtom = atom(null, async (_get, set) => {
     set(accountAtom, address);
     set(balanceAtom, balanceInEth);
     set(chainIdAtom, chainId);
+
+    // TODO: 自动重连时的登录逻辑暂时注释，避免与 connectWalletAtom 重复调用
+    // 后续可以优化：检查 currentUserAtom 是否为空，再决定是否调用登录
+    try {
+      const user = await walletLogin(address);
+      set(currentUserAtom, user);
+      console.log('✅ 自动登录成功:', user);
+    } catch (error) {
+      console.error('❌ 自动登录失败:', error);
+    }
 
     return { signer, address, balance: balanceInEth, chainId };
   } catch (error) {
@@ -263,3 +285,6 @@ export const refreshAWETHBalanceAtom = atom(null, async (get, set) => {
     console.error('刷新 aWETH 余额失败:', error);
   }
 });
+
+// 当前登录的用户信息（在其他 atom 定义后面添加）
+export const currentUserAtom = atom<User | null>(null);

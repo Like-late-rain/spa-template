@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1764818647479" clover="3.2.0">
-  <project timestamp="1764818647479" name="All files">
-    <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0" elements="0" coveredelements="0" complexity="0" loc="0" ncloc="0" packages="0" files="0" classes="0"/>
+<coverage generated="1766542692566" clover="3.2.0">
+  <project timestamp="1766542692566" name="All files">
+    <metrics statements="2" coveredstatements="2" conditionals="68" coveredconditionals="21" methods="60" coveredmethods="16" elements="130" coveredelements="39" complexity="0" loc="2" ncloc="2" packages="2" files="2" classes="2"/>
+    <package name="services">
+      <metrics statements="1" coveredstatements="1" conditionals="26" coveredconditionals="21" methods="7" coveredmethods="7"/>
+      <file name="userApi.ts" path="/Users/yuechunyu/Documents/project/newWorld/spa/src/services/userApi.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="26" coveredconditionals="21" methods="7" coveredmethods="7"/>
+        <line num="1" count="5" type="cond" truecount="21" falsecount="5"/>
+      </file>
+    </package>
+    <package name="stores">
+      <metrics statements="1" coveredstatements="1" conditionals="42" coveredconditionals="0" methods="53" coveredmethods="9"/>
+      <file name="web3Atoms.ts" path="/Users/yuechunyu/Documents/project/newWorld/spa/src/stores/web3Atoms.ts">
+        <metrics statements="1" coveredstatements="1" conditionals="42" coveredconditionals="0" methods="53" coveredmethods="9"/>
+        <line num="1" count="21" type="cond" truecount="0" falsecount="42"/>
+      </file>
+    </package>
   </project>
 </coverage>

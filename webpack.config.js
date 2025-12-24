@@ -37,6 +37,9 @@ const _mergeConfig = require(`./config/webpack.${_mode}.js`);
 // 用于显示构建的进度条(美化终端输出)
 const { ThemedProgressPlugin } = require('themed-progress-plugin');
 
+// Dotenv: 用于加载环境变量
+const Dotenv = require('dotenv-webpack');
+
 // ========== 3. 基础配置对象 ==========
 const webpackBaseConfig = {
   // ---------- 3.1 入口文件 ----------
@@ -72,8 +75,8 @@ const webpackBaseConfig = {
         // test: 匹配文件扩展名（这里匹配 .ts 和 .tsx 文件）
         test: /\.(ts|tsx)$/,
 
-        // exclude: 排除 node_modules 目录，不处理第三方库
-        exclude: /(node_modules)/,
+        // exclude: 排除 node_modules 目录和 tests 目录
+        exclude: /(node_modules|tests)/,
 
         // use: 使用什么 loader 来处理这些文件
         use: {
@@ -146,6 +149,14 @@ const webpackBaseConfig = {
   // ---------- 3.6 插件配置 ----------
   plugins: [
     new ThemedProgressPlugin(),
+    // Dotenv: 根据当前模式加载对应的环境变量文件
+    // 开发模式: .env
+    // 生产模式: .env.production
+    new Dotenv({
+      path: _modeflag ? './.env.production' : './.env',
+      safe: false, // 不强制要求 .env.example
+      systemvars: true, // 允许系统环境变量覆盖
+    }),
     // MiniCssExtractPlugin: 将 CSS 提取到单独的文件中
     new MiniCssExtractPlugin({
       // filename: 提取出的 CSS 文件名
