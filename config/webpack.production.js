@@ -4,6 +4,7 @@
  */
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { join, resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -68,6 +69,18 @@ module.exports = {
       favicon: './public/favicon.png',
       // HTML 模板文件路径
       template: resolve(__dirname, '../src/index-prod.html'),
+    }),
+    // 复制 public 目录下的文件到 dist
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: resolve(__dirname, '../public'),
+          to: resolve(__dirname, '../dist'),
+          globOptions: {
+            ignore: ['**/favicon.png'], // 忽略 favicon，已通过 HtmlWebpackPlugin 处理
+          },
+        },
+      ],
     }),
   ],
 };
