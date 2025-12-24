@@ -77,6 +77,10 @@
     "react-router-dom": "^7.10.0",
     "tailwind-merge": "^3.4.0"
   },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "biome check --write --no-errors-on-unmatched",
