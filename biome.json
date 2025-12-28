@@ -13,7 +13,8 @@
       "src/**/*.js",
       "src/**/*.jsx",
       "config/**/*.js",
-      "!src/types/**/*.ts"
+      "!src/types/**/*.ts",
+      "!src/components/solid-examples/**/*.tsx"
     ]
   },
   "formatter": {

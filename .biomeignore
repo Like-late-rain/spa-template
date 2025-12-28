@@ -50,3 +50,4 @@ Thumbs.db
 
 # Generated types (if you want to exclude them)
 src/types
+src/components/solid-examples
