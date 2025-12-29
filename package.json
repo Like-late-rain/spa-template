@@ -17,7 +17,8 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "check": "npm run lint && npm run format:check",
     "check:fix": "npm run lint:fix && npm run format",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "yarn workspace @yuechu/wallet-jotai build"
   },
   "keywords": [],
   "author": "东方美人",
@@ -58,6 +59,8 @@
     "terser-webpack-plugin": "^5.3.16",
     "themed-progress-plugin": "^1.0.1",
     "ts-jest": "^29.4.6",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
     "webpack": "^5.103.0",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
