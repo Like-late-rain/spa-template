@@ -1,6 +1,6 @@
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
-import { accountAtom, contractAtom } from '@/stores/web3Atoms';
+import { accountAtom, universityCourseAtom } from '@/stores/web3Atoms';
 
 /**
  * 示例组件：展示如何在其他组件中使用全局合约实例
@@ -8,7 +8,7 @@ import { accountAtom, contractAtom } from '@/stores/web3Atoms';
  */
 const ContractExample = () => {
   // 直接从全局获取合约实例，无需手动创建
-  const contract = useAtomValue(contractAtom);
+  const contract = useAtomValue(universityCourseAtom);
   const account = useAtomValue(accountAtom);
   const [courseCount, setCourseCount] = useState<string>('');
 

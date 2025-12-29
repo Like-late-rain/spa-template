@@ -7,9 +7,9 @@ import { updateUser } from '@/services/userApi';
 import {
   accountAtom,
   balanceAtom,
-  contractAtom,
   currentUserAtom,
   signerAtom,
+  universityCourseAtom,
 } from '@/stores/web3Atoms';
 import type { Course } from '@/types/course';
 import { shortenAddress } from '@/utils/helpers';
@@ -20,7 +20,7 @@ export default function Profile() {
   const ethBalance = useAtomValue(balanceAtom);
   const { yctBalance, refetchBalance } = useYCToken();
   const signer = useAtomValue(signerAtom);
-  const contract = useAtomValue(contractAtom);
+  const contract = useAtomValue(universityCourseAtom);
   const currentUser = useAtomValue(currentUserAtom);
   const setCurrentUser = useSetAtom(currentUserAtom);
 

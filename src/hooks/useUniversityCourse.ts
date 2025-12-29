@@ -1,11 +1,11 @@
 import { useAtomValue } from 'jotai';
 import { useCallback, useEffect, useState } from 'react';
-import { accountAtom, contractAtom } from '@/stores/web3Atoms';
+import { accountAtom, universityCourseAtom } from '@/stores/web3Atoms';
 import type { Course } from '@/types/course';
 import { showErrorToast } from '@/utils/toast';
 
 export const useUniversityCourse = () => {
-  const contract = useAtomValue(contractAtom);
+  const contract = useAtomValue(universityCourseAtom);
   const account = useAtomValue(accountAtom);
 
   // 获取单个课程详情

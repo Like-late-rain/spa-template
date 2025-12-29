@@ -2,12 +2,12 @@ import { useAtomValue } from 'jotai';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import SearchBar from '@/components//common/SearchBar';
 import CourseCard from '@/components/common/CourseCard';
-import { contractAtom } from '@/stores/web3Atoms';
+import { universityCourseAtom } from '@/stores/web3Atoms';
 import type { Course } from '@/types/course';
 
 export default function Market() {
   const [searchQuery, setSearchQuery] = useState('');
-  const contract = useAtomValue(contractAtom);
+  const contract = useAtomValue(universityCourseAtom);
   const [courseCount, setCourseCount] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [courses, setCourses] = useState<Course[]>([]);

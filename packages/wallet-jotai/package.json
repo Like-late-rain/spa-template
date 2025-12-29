@@ -1,0 +1,43 @@
+{
+  "name": "@yuechu/wallet-jotai",
+  "version": "1.0.3",
+  "description": "通用的以太坊钱包 Jotai 状态管理库",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "pnpm run build",
+    "deploy": "npm publish"
+  },
+  "keywords": [
+    "ethereum",
+    "wallet",
+    "jotai",
+    "web3",
+    "metamask"
+  ],
+  "author": "东方美人",
+  "license": "ISC",
+  "publishConfig": {
+    "registry": "http://localhost:4873"
+  },
+  "peerDependencies": {
+    "ethers": "^6.0.0",
+    "jotai": "^2.0.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3"
+  }
+}

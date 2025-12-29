@@ -2,12 +2,12 @@ import { parseEther } from 'ethers';
 import { useAtomValue } from 'jotai';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { contractAtom } from '@/stores/web3Atoms';
+import { universityCourseAtom } from '@/stores/web3Atoms';
 import { showErrorToast, showSuccessToast } from '@/utils/toast';
 
 export default function CreateCourse() {
   const navigate = useNavigate();
-  const contract = useAtomValue(contractAtom);
+  const contract = useAtomValue(universityCourseAtom);
   const [isPending, setIsPending] = useState(false);
 
   const [formData, setFormData] = useState({
